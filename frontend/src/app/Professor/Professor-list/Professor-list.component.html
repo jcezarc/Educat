@@ -1,0 +1,26 @@
+<div class="row">
+
+  <div *ngFor="let Professor of Navigator.view(items)" class="col-sm-6 col-xs-12">
+    <app-Professor-item [Professor]="Professor">
+          <div>
+              <app-delete-button (delete)="remove(Professor)">
+              </app-delete-button>
+
+                        <button 
+                        style="border: none;background-color: transparent;margin-left: 10%;"
+                        (click)="select(Professor)">
+                            <i class="fa fa-check-circle-o"
+                            data-toggle="tooltip" title="Select Professor for Aula"></i>
+                        </button>
+                        
+          </div>
+    </app-Professor-item>
+  </div>
+  <h4 *ngIf="!items" class="jumbotron ml-4">Professor Not found. :(</h4>
+  
+</div>
+
+<app-navigator 
+  [maxItems]="4"
+  #Navigator
+></app-navigator>

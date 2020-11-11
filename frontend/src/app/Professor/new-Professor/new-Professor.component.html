@@ -1,0 +1,50 @@
+<div class="card mx-auto">
+	<div class="card-header">
+        New Professor
+    </div>
+
+    <div class="card-body">
+        <form [formGroup]="ProfessorForm" novalidate> 
+                <div class="form-row">
+                    <div class="col">
+                        <label>RF:</label>
+                        <input formControlName="RF" type="text" class="form-control" placeholder="RF">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <label>nome:</label>
+                        <input formControlName="nome" type="text" class="form-control" placeholder="nome">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <label>especialidade:</label>
+                        <input formControlName="especialidade" type="text" class="form-control" placeholder="especialidade">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <label>foto:</label>
+                        <input formControlName="foto" type="text" class="form-control" placeholder="foto">
+                    </div>
+                </div>
+                
+
+
+
+
+            <div class=" form-group">
+                <button (click)="ProfessorList.save(ProfessorForm.value)" type="button" [disabled]="!ProfessorForm.valid" 
+                class="btn btn-info btn-block">
+                  Save Professor
+                </button>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<app-Professor-list
+#ProfessorList
+></app-Professor-list>

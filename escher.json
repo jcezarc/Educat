@@ -1,0 +1,90 @@
+{
+    "tables": [
+        {
+            "table": "Aluno",
+            "pk_field": "RA",
+            "field_list": {
+                "RA": "str",
+                "nome": "str",
+                "obs": "str",
+                "foto": "str"
+            },
+            "Angular": {
+                "title": "nome",
+                "detail": "RA",
+                "image": "foto",
+                "label": "obs"
+            }
+        },
+        {
+            "table": "Professor",
+            "pk_field": "RF",
+            "field_list": {
+                "RF": "str",
+                "nome": "str",
+                "especialidade": "str",
+                "foto": "str"
+            },
+            "Angular": {
+                "title": "nome",
+                "detail": "RF",
+                "image": "foto",
+                "label": "especialidade"
+            }
+        },
+        {
+            "table": "Aula",
+            "pk_field": "id",
+            "field_list": {
+                "id": "int",
+                "descricao": "str",
+                "sala": "str",
+                "horario": "str",
+                "logotipo": "str"
+            },
+            "nested" :{
+                "professor": "Professor"
+            },
+            "Angular": {
+                "title": "descricao",
+                "detail": "professor.nome",
+                "image": "logotipo",
+                "label": "horario"
+            }
+        },
+        {
+            "table": "Presenca",
+            "pk_field": "id",
+            "field_list": {
+                "id": "int",
+                "dia": "date",
+                "situacao": "str"
+            },
+            "nested": {
+                "aluno": "Aluno",
+                "aula": "Aula"
+            },
+            "Angular": {
+                "title": "aula.descricao",
+                "detail": "aluno.nome",
+                "label": "situacao",
+                "label-colors": {
+                    "blue": "presente",
+                    "green": "dispensado",
+                    "yellow": "doente",
+                    "red": "faltou"
+                }
+            }
+        }
+    ],
+    "db_type": "Postgres",
+    "db_config": {
+        "dialect": "postgresql",
+        "driver": "psycopg2",
+        "username": "posgres",
+        "password": "123",
+        "host": "localhost",
+        "port": 5432,
+        "database": "educat"
+    }
+}

@@ -1,0 +1,16 @@
+<section>
+  <h1>
+    Professor
+  </h1>
+</section>
+
+  <app-search-bar
+    (filter)="ProfessorList.filter($event)"
+    (add)="ProfessorList.add()"
+  ></app-search-bar>
+
+  <app-Professor-list
+    #ProfessorList
+  ></app-Professor-list>
+
+  

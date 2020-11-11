@@ -1,0 +1,39 @@
+<div class="card mt-4">
+    <div class="row">
+        <div class="col-4">    
+            
+        </div>
+        <div class="col-6">
+            <h4>
+                {{Presenca.aula.descricao}}
+            </h4>
+        </div>
+        <ng-content></ng-content>
+    </div>
+    <div class="row">
+
+        <div class="col-4 mx-1">
+            <span *ngIf="Presenca.situacao == 'presente'" class="badge badge-info">
+                presente
+            </span>
+            <span *ngIf="Presenca.situacao == 'dispensado'" class="badge badge-success">
+                dispensado
+            </span>
+            <span *ngIf="Presenca.situacao == 'doente'" class="badge badge-warning">
+                doente
+            </span>
+            <span *ngIf="Presenca.situacao == 'faltou'" class="badge badge-danger">
+                faltou
+            </span>
+
+
+        </div>
+
+        <div class="col-6">
+            <span class="text-muted small">
+                {{Presenca.aluno.nome}}
+            </span>
+        </div>
+
+    </div>
+</div>

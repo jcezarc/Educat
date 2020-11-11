@@ -1,0 +1,8 @@
+CREATE TABLE Aluno(
+    RA VARCHAR(100) PRIMARY KEY,
+    nome VARCHAR(100) ,
+    obs VARCHAR(100) ,
+    foto VARCHAR(100) ,
+
+
+)

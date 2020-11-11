@@ -1,0 +1,31 @@
+<div class="card mt-4">
+    <div class="row">
+        <div class="col-4">    
+            
+            <img [src]="Aula.logotipo" 
+                class="img-Aula" height="96" 
+            >
+            
+        </div>
+        <div class="col-6">
+            <h4>
+                {{Aula.descricao}}
+            </h4>
+        </div>
+        <ng-content></ng-content>
+    </div>
+    <div class="row">
+
+        <div class="col-4 mx-1">
+
+
+        </div>
+
+        <div class="col-6">
+            <span class="text-muted small">
+                {{Aula.professor..nome}}
+            </span>
+        </div>
+
+    </div>
+</div>
