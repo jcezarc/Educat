@@ -38,6 +38,15 @@ class PresencaService:
         return resp_post_ok()
 
     def update(self, json):
+        '''
+        ****************************************************************
+            Atenção:
+            O professor fará apenas um clique num checkbox
+            para marcar a presença dos alunos numa determinada
+            aula - portanto não faz sentido enviar o json de
+            Presença toda vez para cada aluno...!!!
+        ****************************************************************
+        '''
         logging.info('Changing record of Presenca ...')
         errors = self.table.update(json)
         if errors:
