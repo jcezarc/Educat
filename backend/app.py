@@ -13,12 +13,12 @@ from resource.all_Aluno import AllAluno
 from model.Professor_model import ProfessorModel
 from resource.Professor_by_id import ProfessorById
 from resource.all_Professor import AllProfessor
+from model.Curso_model import CursoModel
+from resource.Curso_by_id import CursoById
+from resource.all_Curso import AllCurso
 from model.Aula_model import AulaModel
 from resource.Aula_by_id import AulaById
 from resource.all_Aula import AllAula
-from model.Presenca_model import PresencaModel
-from resource.Presenca_by_id import PresencaById
-from resource.all_Presenca import AllPresenca
 
 
 BASE_PATH = '/educat'
@@ -26,26 +26,26 @@ BASE_PATH = '/educat'
 def config_routes(app):
     api = Api(app)
     #--- Resources: ----
-    api.add_resource(AlunoById, f'{BASE_PATH}/Aluno/<RA>', methods=['GET'], endpoint='get_Aluno_by_id')
+    api.add_resource(AlunoById, f'{BASE_PATH}/Aluno/<id>', methods=['GET'], endpoint='get_Aluno_by_id')
     api.add_resource(AllAluno, f'{BASE_PATH}/Aluno', methods=['GET'], endpoint='get_AllAluno')
     api.add_resource(AllAluno, f'{BASE_PATH}/Aluno', methods=['POST'], endpoint='post_Aluno')
     api.add_resource(AllAluno, f'{BASE_PATH}/Aluno', methods=['PUT'], endpoint='put_Aluno')
-    api.add_resource(AlunoById, f'{BASE_PATH}/Aluno/<RA>', methods=['DELETE'], endpoint='delete_Aluno')
-    api.add_resource(ProfessorById, f'{BASE_PATH}/Professor/<RF>', methods=['GET'], endpoint='get_Professor_by_id')
+    api.add_resource(AlunoById, f'{BASE_PATH}/Aluno/<id>', methods=['DELETE'], endpoint='delete_Aluno')
+    api.add_resource(ProfessorById, f'{BASE_PATH}/Professor/<id>', methods=['GET'], endpoint='get_Professor_by_id')
     api.add_resource(AllProfessor, f'{BASE_PATH}/Professor', methods=['GET'], endpoint='get_AllProfessor')
     api.add_resource(AllProfessor, f'{BASE_PATH}/Professor', methods=['POST'], endpoint='post_Professor')
     api.add_resource(AllProfessor, f'{BASE_PATH}/Professor', methods=['PUT'], endpoint='put_Professor')
-    api.add_resource(ProfessorById, f'{BASE_PATH}/Professor/<RF>', methods=['DELETE'], endpoint='delete_Professor')
+    api.add_resource(ProfessorById, f'{BASE_PATH}/Professor/<id>', methods=['DELETE'], endpoint='delete_Professor')
+    api.add_resource(CursoById, f'{BASE_PATH}/Curso/<id>', methods=['GET'], endpoint='get_Curso_by_id')
+    api.add_resource(AllCurso, f'{BASE_PATH}/Curso', methods=['GET'], endpoint='get_AllCurso')
+    api.add_resource(AllCurso, f'{BASE_PATH}/Curso', methods=['POST'], endpoint='post_Curso')
+    api.add_resource(AllCurso, f'{BASE_PATH}/Curso', methods=['PUT'], endpoint='put_Curso')
+    api.add_resource(CursoById, f'{BASE_PATH}/Curso/<id>', methods=['DELETE'], endpoint='delete_Curso')
     api.add_resource(AulaById, f'{BASE_PATH}/Aula/<id>', methods=['GET'], endpoint='get_Aula_by_id')
     api.add_resource(AllAula, f'{BASE_PATH}/Aula', methods=['GET'], endpoint='get_AllAula')
     api.add_resource(AllAula, f'{BASE_PATH}/Aula', methods=['POST'], endpoint='post_Aula')
     api.add_resource(AllAula, f'{BASE_PATH}/Aula', methods=['PUT'], endpoint='put_Aula')
     api.add_resource(AulaById, f'{BASE_PATH}/Aula/<id>', methods=['DELETE'], endpoint='delete_Aula')
-    api.add_resource(PresencaById, f'{BASE_PATH}/Presenca/<id>', methods=['GET'], endpoint='get_Presenca_by_id')
-    api.add_resource(AllPresenca, f'{BASE_PATH}/Presenca', methods=['GET'], endpoint='get_AllPresenca')
-    api.add_resource(AllPresenca, f'{BASE_PATH}/Presenca', methods=['POST'], endpoint='post_Presenca')
-    api.add_resource(AllPresenca, f'{BASE_PATH}/Presenca', methods=['PUT'], endpoint='put_Presenca')
-    api.add_resource(PresencaById, f'{BASE_PATH}/Presenca/<id>', methods=['DELETE'], endpoint='delete_Presenca')
     
     #-------------------
 
@@ -83,18 +83,18 @@ def swagger_details(args):
         else:
             resource = ProfessorById
         model = ProfessorModel()
+    elif id_route == 'Curso':
+        if not params:
+            resource = AllCurso
+        else:
+            resource = CursoById
+        model = CursoModel()
     elif id_route == 'Aula':
         if not params:
             resource = AllAula
         else:
             resource = AulaById
         model = AulaModel()
-    elif id_route == 'Presenca':
-        if not params:
-            resource = AllPresenca
-        else:
-            resource = PresencaById
-        model = PresencaModel()
     
     ignore = False
     return model, resource, docstring, ignore

@@ -15,16 +15,16 @@ import { ProfessorItemComponent } from './Professor/Professor-item/Professor-ite
 import { ProfessorService } from './Professor/Professor-service';
 import { ProfessorListComponent } from './Professor/Professor-list/Professor-list.component';
 import { NewProfessorComponent } from './Professor/new-Professor/new-Professor.component';
+import { CursoComponent } from './Curso/Curso-component';
+import { CursoItemComponent } from './Curso/Curso-item/Curso-item.component';
+import { CursoService } from './Curso/Curso-service';
+import { CursoListComponent } from './Curso/Curso-list/Curso-list.component';
+import { NewCursoComponent } from './Curso/new-Curso/new-Curso.component';
 import { AulaComponent } from './Aula/Aula-component';
 import { AulaItemComponent } from './Aula/Aula-item/Aula-item.component';
 import { AulaService } from './Aula/Aula-service';
 import { AulaListComponent } from './Aula/Aula-list/Aula-list.component';
 import { NewAulaComponent } from './Aula/new-Aula/new-Aula.component';
-import { PresencaComponent } from './Presenca/Presenca-component';
-import { PresencaItemComponent } from './Presenca/Presenca-item/Presenca-item.component';
-import { PresencaService } from './Presenca/Presenca-service';
-import { PresencaListComponent } from './Presenca/Presenca-list/Presenca-list.component';
-import { NewPresencaComponent } from './Presenca/new-Presenca/new-Presenca.component';
 
 import { NavigatorComponent } from './shared/navigator/navigator.component';
 import { SearchBarComponent } from './shared/search-bar/search-bar.component';
@@ -43,14 +43,14 @@ import { HeaderComponent } from './header/header.component'
     ProfessorItemComponent,
     ProfessorListComponent,
     NewProfessorComponent,
+    CursoComponent,
+    CursoItemComponent,
+    CursoListComponent,
+    NewCursoComponent,
     AulaComponent,
     AulaItemComponent,
     AulaListComponent,
     NewAulaComponent,
-    PresencaComponent,
-    PresencaItemComponent,
-    PresencaListComponent,
-    NewPresencaComponent,
 
     HeaderComponent,
     SearchBarComponent,
@@ -67,8 +67,8 @@ import { HeaderComponent } from './header/header.component'
     AuthService,
 AlunoService,
 ProfessorService,
+CursoService,
 AulaService,
-PresencaService,
 
   ],
   bootstrap: [AppComponent]

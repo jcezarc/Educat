@@ -3,16 +3,9 @@
   <div *ngFor="let Aula of Navigator.view(items)" class="col-sm-6 col-xs-12">
     <app-Aula-item [Aula]="Aula">
           <div>
-              <app-delete-button (delete)="remove(Aula)">
-              </app-delete-button>
-
-                        <button 
-                        style="border: none;background-color: transparent;margin-left: 10%;"
-                        (click)="select(Aula)">
-                            <i class="fa fa-check-circle-o"
-                            data-toggle="tooltip" title="Select Aula for Presenca"></i>
-                        </button>
-                        
+              <app-check-button (check)="remove(Aula)">
+              </app-check-button>
+            
           </div>
     </app-Aula-item>
   </div>

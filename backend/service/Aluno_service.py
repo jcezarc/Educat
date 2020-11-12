@@ -16,16 +16,16 @@ class AlunoService:
         else:
             self.table = get_table(AlunoModel)
 
-    def find(self, params, RA=None):
-        if RA is None:
+    def find(self, params, id=None):
+        if id is None:
             logging.info('Finding all records of Aluno...')
             found = self.table.find_all(
                 20,
                 self.table.get_conditions(params, False)
             )
         else:
-            logging.info(f'Finding "{RA}" in Aluno ...')
-            found = self.table.find_one([RA])
+            logging.info(f'Finding "{id}" in Aluno ...')
+            found = self.table.find_one([id])
         if not found:
             return resp_not_found()
         return resp_get_ok(found)
@@ -44,7 +44,7 @@ class AlunoService:
             return resp_error(errors)
         return resp_ok("Record changed OK!")
         
-    def delete(self, RA):
+    def delete(self, id):
         logging.info('Removing record of Aluno ...')
-        self.table.delete(RA)
+        self.table.delete(id)
         return resp_ok("Deleted record OK!")

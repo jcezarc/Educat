@@ -8,21 +8,21 @@ class AlunoById(Resource):
     
 
     
-    def get(self, RA):
+    def get(self, id):
         """
-        Search in  Aluno by the field RA
+        Search in  Aluno by the field id
 
         #Read
         """
         service = AlunoService()
-        return service.find(None, RA)
+        return service.find(None, id)
 
     
-    def delete(self, RA):
+    def delete(self, id):
         """
         Delete a record of Aluno
 
         #Write
         """
         service = AlunoService()
-        return service.delete([RA])
+        return service.delete([id])

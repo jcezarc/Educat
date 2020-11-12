@@ -1,28 +1,28 @@
 from flask_restful import Resource
 
 
-from service.Presenca_service import PresencaService
+from service.Curso_service import CursoService
 
-class PresencaById(Resource):
+class CursoById(Resource):
 
     
 
     
     def get(self, id):
         """
-        Search in  Presenca by the field id
+        Search in  Curso by the field id
 
         #Read
         """
-        service = PresencaService()
+        service = CursoService()
         return service.find(None, id)
 
     
     def delete(self, id):
         """
-        Delete a record of Presenca
+        Delete a record of Curso
 
         #Write
         """
-        service = PresencaService()
+        service = CursoService()
         return service.delete([id])

@@ -2,38 +2,38 @@ import json
 from flask_restful import Resource
 from flask import request, jsonify
 
-from service.Presenca_service import PresencaService
+from service.Curso_service import CursoService
 
-class AllPresenca(Resource):
+class AllCurso(Resource):
 
     
     def get(self):
         """
-        Returns all records from the table Presenca
+        Returns all records from the table Curso
 
         #Read
         """
-        service = PresencaService()
+        service = CursoService()
         return service.find(request.args)
     
     
     def post(self):
         """
-        Write a new record in Presenca
+        Write a new record in Curso
 
         #Write
         """
         req_data = request.get_json()
-        service = PresencaService()
+        service = CursoService()
         return service.insert(req_data)
 
     
     def put(self):
         """
-        Updates a record in Presenca
+        Updates a record in Curso
 
         #Write
         """
         req_data = json.loads(request.data.decode("utf8"))
-        service = PresencaService()
+        service = CursoService()
         return service.update(req_data)

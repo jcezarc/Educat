@@ -2,8 +2,9 @@
     "tables": [
         {
             "table": "Aluno",
-            "pk_field": "RA",
+            "pk_field": "id",
             "field_list": {
+                "id": "int",
                 "RA": "str",
                 "nome": "str",
                 "obs": "str",
@@ -18,8 +19,9 @@
         },
         {
             "table": "Professor",
-            "pk_field": "RF",
+            "pk_field": "id",
             "field_list": {
+                "id": "int",
                 "RF": "str",
                 "nome": "str",
                 "especialidade": "str",
@@ -33,11 +35,11 @@
             }
         },
         {
-            "table": "Aula",
+            "table": "Curso",
             "pk_field": "id",
             "field_list": {
                 "id": "int",
-                "descricao": "str",
+                "nome": "str",
                 "sala": "str",
                 "horario": "str",
                 "logotipo": "str"
@@ -46,34 +48,27 @@
                 "professor": "Professor"
             },
             "Angular": {
-                "title": "descricao",
+                "title": "nome",
                 "detail": "professor.nome",
                 "image": "logotipo",
                 "label": "horario"
             }
         },
         {
-            "table": "Presenca",
+            "table": "Aula",
             "pk_field": "id",
             "field_list": {
                 "id": "int",
-                "dia": "date",
-                "situacao": "str"
+                "dia": "date"
             },
             "nested": {
                 "aluno": "Aluno",
-                "aula": "Aula"
+                "curso": "Curso"
             },
             "Angular": {
-                "title": "aula.descricao",
+                "title": "curso.nome",
                 "detail": "aluno.nome",
-                "label": "situacao",
-                "label-colors": {
-                    "blue": "presente",
-                    "green": "dispensado",
-                    "yellow": "doente",
-                    "red": "faltou"
-                }
+                "label": "dia"
             }
         }
     ],

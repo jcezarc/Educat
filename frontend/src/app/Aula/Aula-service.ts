@@ -15,7 +15,7 @@ export class AulaService{
 
     static getCurrAula(){
         if(AulaService.currentAula){
-            return AulaService.currentAula.descricao
+            return AulaService.currentAula.curso.nome
         }else{
             return ''
         }
@@ -33,7 +33,7 @@ export class AulaService{
 
     AulasByTitle(text: string):Observable<Response>{
         return this.http.get(
-            `${Aula_API}?descricao=${text}`
+            `${Aula_API}?curso.nome=${text}`
             ,new RequestOptions({headers: AuthService.header})
         )
     }

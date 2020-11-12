@@ -2,11 +2,9 @@
 
 export interface AulaModel{
     id: number
-    descricao: string
-    sala: string
-    horario: string
-    logotipo: string
+    dia: string
 
-    professor: any
+    aluno: any
+    curso: any
 
 }

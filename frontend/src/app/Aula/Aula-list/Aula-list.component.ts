@@ -3,7 +3,8 @@ import { AulaModel } from '../Aula-model';
 import { AulaService } from '../Aula-service';
 import { Router } from '@angular/router';
 import {RespJsonFlask} from '../../app.api'
-import {ProfessorService} from '../../Professor/Professor-service'
+import {AlunoService} from '../../Aluno/Aluno-service'
+import {CursoService} from '../../Curso/Curso-service'
 
 
 @Component({
@@ -40,28 +41,9 @@ export class AulaListComponent implements OnInit {
     )
   }
 
-  add(){
-    this.router.navigate(['/new-Aula'])
-  }
-
-  remove(item: AulaModel){
-    if(!confirm(`Remove Aula "${item.descricao}" ?`)){
-      return
-    }
-    this.AulaSvc.delete(item.id as unknown as string)
-    this.items.splice(this.items.indexOf(item),1)
-  }
-
   save(item: AulaModel){
-        item.professor = ProfessorService.currentProfessor
-
     this.AulaSvc.saveAula(item)
     this.items.push(item)
-  }
-
-  select(item: AulaModel){
-    AulaService.currentAula = item
-    this.router.navigate(['/new-Presenca'])
   }
 
 }

@@ -16,16 +16,16 @@ class ProfessorService:
         else:
             self.table = get_table(ProfessorModel)
 
-    def find(self, params, RF=None):
-        if RF is None:
+    def find(self, params, id=None):
+        if id is None:
             logging.info('Finding all records of Professor...')
             found = self.table.find_all(
                 20,
                 self.table.get_conditions(params, False)
             )
         else:
-            logging.info(f'Finding "{RF}" in Professor ...')
-            found = self.table.find_one([RF])
+            logging.info(f'Finding "{id}" in Professor ...')
+            found = self.table.find_one([id])
         if not found:
             return resp_not_found()
         return resp_get_ok(found)
@@ -44,7 +44,7 @@ class ProfessorService:
             return resp_error(errors)
         return resp_ok("Record changed OK!")
         
-    def delete(self, RF):
+    def delete(self, id):
         logging.info('Removing record of Professor ...')
-        self.table.delete(RF)
+        self.table.delete(id)
         return resp_ok("Deleted record OK!")

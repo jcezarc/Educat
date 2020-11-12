@@ -2,14 +2,10 @@
     <div class="row">
         <div class="col-4">    
             
-            <img [src]="Aula.logotipo" 
-                class="img-Aula" height="96" 
-            >
-            
         </div>
         <div class="col-6">
             <h4>
-                {{Aula.descricao}}
+                {{Aula.curso.nome}}
             </h4>
         </div>
         <ng-content></ng-content>
@@ -18,12 +14,15 @@
 
         <div class="col-4 mx-1">
 
+            <span class="text-muted small">
+                {{Aula.aluno.nome}}
+            </span>
 
         </div>
 
         <div class="col-6">
             <span class="text-muted small">
-                {{Aula.professor..nome}}
+                {{Aula.curso..nome}}
             </span>
         </div>
 
