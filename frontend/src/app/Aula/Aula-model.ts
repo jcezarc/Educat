@@ -7,4 +7,5 @@ export interface AulaModel{
     aluno: any
     curso: any
 
+    presente: boolean
 }

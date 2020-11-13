@@ -13,6 +13,7 @@ import {CursoService} from '../../Curso/Curso-service'
 })
 export class AulaListComponent implements OnInit {
 
+  source: AulaModel[] = []
   items: AulaModel[] = []
   
   constructor(
@@ -25,19 +26,20 @@ export class AulaListComponent implements OnInit {
     this.AulaSvc.allAulas().subscribe(
       resp => {
         let obj:RespJsonFlask = (<RespJsonFlask>resp.json())
-        this.items = (<AulaModel[]>obj.data)
+        this.source = (<AulaModel[]>obj.data)
+        this.items = this.source
       }
     )
   }
 
   filter(param: any){
-    this.AulaSvc.AulasByTitle(param.searchContent).subscribe(
-      resp => {
-        let obj:RespJsonFlask = (<RespJsonFlask>resp.json())
-        this.items = (<AulaModel[]>obj.data)
-      // },error => {
-      //   if(error.status == 404) this.items = []
-      }
+    if(!param.searchContent){
+      this.items = this.source
+      return
+    }
+    this.items = this.source.filter(
+      (obj: AulaModel) => 
+        obj.aluno.nome.contains(param.searchContent)
     )
   }
 

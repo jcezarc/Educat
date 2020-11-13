@@ -1,5 +1,5 @@
 CREATE TABLE Aluno(
-    id INT AUTO_INCREMENT,
+    id VARCHAR(40),
     RA VARCHAR(20) ,
     nome VARCHAR(100) ,
     obs VARCHAR(100) ,

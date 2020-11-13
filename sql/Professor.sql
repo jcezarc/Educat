@@ -1,5 +1,5 @@
 CREATE TABLE Professor(
-    id INT AUTO_INCREMENT,
+    id VARCHAR(40),
     RF VARCHAR(100) ,
     nome VARCHAR(100) ,
     especialidade VARCHAR(100) ,
