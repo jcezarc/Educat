@@ -6,9 +6,7 @@ PK_DEFAULT_VALUE = 0
 
 class ProfessorModel(Schema):
     id = Integer(primary_key=True, default=PK_DEFAULT_VALUE, required=True)
-    RF = Str()
     nome = Str()
-    especialidade = Str()
     foto = Str()
 
 

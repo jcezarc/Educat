@@ -9,8 +9,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class SearchBarComponent implements OnInit {
 
   @Output() filter = new EventEmitter()
-  @Output() add = new EventEmitter()
-
+  
   searchForm: FormGroup
 
   constructor(private formBuilder: FormBuilder) { }
@@ -23,10 +22,6 @@ export class SearchBarComponent implements OnInit {
 
   emitFilterEvent(param: any){
     this.filter.emit(param)
-  }
-
-  emitAddEvent(){
-    this.add.emit('')
   }
 
 }

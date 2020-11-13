@@ -6,9 +6,7 @@ PK_DEFAULT_VALUE = 0
 
 class AlunoModel(Schema):
     id = Integer(primary_key=True, default=PK_DEFAULT_VALUE, required=True)
-    RA = Str()
     nome = Str()
-    obs = Str()
     foto = Str()
 
 

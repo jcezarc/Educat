@@ -5,7 +5,7 @@ export interface CursoModel{
     nome: string
     sala: string
     horario: string
-    logotipo: string
+    foto: string
 
     professor: any
 

@@ -15,7 +15,7 @@ export class CheckButtonComponent implements OnInit {
   ngOnInit() {
   }
 
-  emitEventDelete(){
+  emitEventCheck(){
     this.check.emit()
   }
 

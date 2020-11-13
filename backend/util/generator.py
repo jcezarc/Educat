@@ -1,59 +1,51 @@
-import uuid
+import os
 import random
 from faker import Faker
 from datetime import datetime
+from faker.providers import BaseProvider
 
-def set_name_foto(record, fake):
-    name = fake.name()
-    record['nome'] = name
-    record['foto'] = '{}{}.png'.format(
-        fake.url(), name.replace(' ','')
-    )
+FRONTEND_PATH = '../../frontend/src/'
+ASSETS_FMT = 'assets/img/{}'
 
-def fake_aluno(fake):
-    a = {}
-    a['id'] = str(uuid.uuid4())
-    a['RA'] = fake.credit_card_number()
-    set_name_foto(a, fake)
-    return a
+class EducatProvider(BaseProvider):
+    source = {}
+    def choose_or_create_record(self, path):
+        data = self.source.setdefault(path, [])
+        if not data:
+            path = ASSETS_FMT.format(path)
+            target = os.path.join(FRONTEND_PATH,path)
+            for f in os.listdir(target):
+                record = {}
+                record['nome'] = f.replace('.png', '')
+                # record['foto'] = os.path.join(path, f)
+                record['foto'] = path + '/' + f
+                data.append(record)
+        return random.choice(data)
+    def aluno(self):
+        return self.choose_or_create_record('aluno')
+    def professor(self):
+        return self.choose_or_create_record('professor')
+    def curso(self):
+        c = self.choose_or_create_record('curso')
+        c['sala'] = '{}{}'.format(
+            random.randint(1, 12),
+            random.choice(['A', 'B', 'C', 'D'])
+        )
+        return c
 
-def fake_professor(fake):
-    p = {}
-    p['id'] = str(uuid.uuid4())
-    p['RF'] = fake.credit_card_number()
-    set_name_foto(p, fake)
-    count = random.randint(2, 7)
-    especs = [fake.job() for _ in range(count)]
-    p['especialidade'] = especs
-    return p
-
-def fake_curso(fake):
-    professor = fake_professor(fake)
-    level = random.randint(1, 3)
-    especs = professor['especialidade']
-    c = {}
-    c['id'] = str(uuid.uuid4())
-    c['nome'] = '{} {}'.format(
-        random.choice(especs), level
-    )
-    c['sala'] = '{}{}'.format(
-        random.randint(1, 12),
-        random.choice(['A', 'B', 'C', 'D'])
-    )
-    professor['especialidade'] = ','.join(especs)
-    c['professor'] = professor
-    return c
 
 def fake_aula(count=10):
     fake = Faker('pt_BR')
-    curso = fake_curso(fake)
+    fake.add_provider(EducatProvider)
+    curso = fake.curso()
+    curso['professor'] = fake.professor()
+    curso['horario'] = fake.time('%H:%M')
     lista = []
     today = datetime.today().strftime('%Y-%m-%d')
     while len(lista) < count:
         u = {}
         u['dia'] = today
-        u['curso'] = curso['id']
-        u['aluno'] = fake_aluno(fake)
+        u['aluno'] = fake.aluno()
         u['presente'] = False
         lista.append(u)
     return curso, lista

@@ -3,8 +3,6 @@ import { AulaModel } from '../Aula-model';
 import { AulaService } from '../Aula-service';
 import { Router } from '@angular/router';
 import {RespJsonFlask} from '../../app.api'
-import {AlunoService} from '../../Aluno/Aluno-service'
-import {CursoService} from '../../Curso/Curso-service'
 
 
 @Component({
@@ -45,7 +43,6 @@ export class AulaListComponent implements OnInit {
 
   save(item: AulaModel){
     this.AulaSvc.saveAula(item)
-    this.items.push(item)
   }
 
 }

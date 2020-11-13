@@ -10,7 +10,7 @@ class CursoModel(Schema):
     nome = Str()
     sala = Str()
     horario = Str()
-    logotipo = Str()
+    foto = Str()
 
     professor = Nested(ProfessorModel)
 
