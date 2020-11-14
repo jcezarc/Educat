@@ -1,9 +1,9 @@
 import logging
+from datetime import datetime
 from model.Aula_model import AulaModel
 from util.messages import (
     resp_error,
     resp_not_found,
-    resp_post_ok,
     resp_get_ok,
     resp_ok
 )
@@ -17,34 +17,20 @@ class AulaService:
             self.table = get_table(AulaModel)
 
     def find(self, params, id=None):
-        if id is None:
-            logging.info('Finding all records of Aula...')
-            found = self.table.find_all(
-                20,
-                self.table.get_conditions(params, False)
-            )
-        else:
-            logging.info(f'Finding "{id}" in Aula ...')
-            found = self.table.find_one([id])
+        logging.info('Buscando aula de hoje...')
+        found = self.table.find_all(
+            20,
+            self.table.get_conditions({
+                'dia': datetime.today().strftime('%Y-%m-%d')
+            }, False)
+        )
         if not found:
             return resp_not_found()
         return resp_get_ok(found)
 
-    def insert(self, json):
-        logging.info('New record write in Aula')
-        errors = self.table.insert(json)
-        if errors:
-            return resp_error(errors)
-        return resp_post_ok()
-
     def update(self, json):
-        logging.info('Changing record of Aula ...')
+        logging.info('Alterando lista de presença da Aula ...')
         errors = self.table.update(json)
         if errors:
             return resp_error(errors)
-        return resp_ok("Record changed OK!")
-        
-    def delete(self, id):
-        logging.info('Removing record of Aula ...')
-        self.table.delete(id)
-        return resp_ok("Deleted record OK!")
+        return resp_ok("Registro alterado OK!")

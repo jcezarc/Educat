@@ -17,7 +17,6 @@ class EducatProvider(BaseProvider):
             for f in os.listdir(target):
                 record = {}
                 record['nome'] = f.replace('.png', '')
-                # record['foto'] = os.path.join(path, f)
                 record['foto'] = path + '/' + f
                 data.append(record)
         return random.choice(data)
