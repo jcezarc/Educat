@@ -6,11 +6,10 @@ from model.Professor_model import ProfessorModel
 PK_DEFAULT_VALUE = 0
 
 class CursoModel(Schema):
-    id = Integer(primary_key=True, default=PK_DEFAULT_VALUE, required=True)
-    nome = Str()
+    id = Integer(primary_key=True, default=PK_DEFAULT_VALUE)
+    nome = Str(required=True)
     sala = Str()
     horario = Str()
     foto = Str()
-
     professor = Nested(ProfessorModel)
 

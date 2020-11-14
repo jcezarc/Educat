@@ -7,7 +7,7 @@ from model.Curso_model import CursoModel
 PK_DEFAULT_VALUE = 0
 
 class AulaModel(Schema):
-    id = Integer(primary_key=True, default=PK_DEFAULT_VALUE, required=True)
+    id = Integer(primary_key=True, default=PK_DEFAULT_VALUE)
     dia = Date()
     aluno = Nested(AlunoModel)
     curso = Nested(CursoModel)

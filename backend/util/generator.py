@@ -4,7 +4,7 @@ from faker import Faker
 from datetime import datetime
 from faker.providers import BaseProvider
 
-FRONTEND_PATH = '../../frontend/src/'
+FRONTEND_PATH = '../frontend/src/'
 ASSETS_FMT = 'assets/img/{}'
 
 class EducatProvider(BaseProvider):
@@ -49,10 +49,14 @@ def aulas_fake(count=10):
         lista.append(u)
     return curso, lista
 
-if __name__ == '__main__':
+def run_tests():
+    FRONTEND_PATH = '../../frontend/src/'
     curso, lista = aulas_fake()
     print('='*100)
     print('Curso:', curso)
     for item in lista:
         print('-'*100)
         print(item)
+
+if __name__ == '__main__':
+    run_tests()

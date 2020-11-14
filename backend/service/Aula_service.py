@@ -8,7 +8,7 @@ from util.messages import (
     resp_ok
 )
 from service.db_connection import get_table
-from util.generator import aulas_fake
+from util.generator import aulas_fake, run_tests
 
 class AulaService:
     first_time = True
@@ -23,7 +23,7 @@ class AulaService:
             if self.find()[1] == 404:
                 self.start_db()
 
-    def find(self, params, id=None):
+    def find(self):
         logging.info('Buscando aula de hoje...')
         found = self.table.find_all(
             20,
@@ -43,6 +43,7 @@ class AulaService:
         return resp_ok("Registro alterado OK!")
 
     def start_db(self):
+        run_tests()
         curso, aulas = aulas_fake()
         tc = self.table.joins['curso']
         errors = tc.insert(curso)

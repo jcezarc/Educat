@@ -28,15 +28,12 @@ class DbTable:
         field_defs = self.validator.declared_fields
         self.pk_fields = []
         self.map = {}
-        self.required_fields = []
         self.new_condition_event = {
             # field : <<callback function>>
         }
         self.conditions = []
         for field_name in field_defs:
             field = field_defs[field_name]
-            if field.required:
-                self.required_fields.append(field_name)
             is_primary_key = field.metadata.get('primary_key')
             field_type = field.__class__.__name__
             is_number = field_type in ['Integer','Float', 'Decimal']
