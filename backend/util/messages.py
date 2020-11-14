@@ -1,8 +1,6 @@
 import datetime
 import logging
 
-GET_NOT_FOUND_MSG = "Not found"
-
 def resp_ok(msg="OK", data=None, status_code=200):
     result = {}
     result['timeStamp'] = str(datetime.datetime.now())
@@ -20,8 +18,7 @@ def resp_error(msg, status_code=400):
     return result, status_code
 
 def resp_not_found():
-    # return resp_error(msg, 404)
-    return resp_ok(GET_NOT_FOUND_MSG)
+    return resp_error('Nenhum registro encontrado!', 404)
 
 def resp_get_ok(data=None):
     return resp_ok('GET ok!', data)
