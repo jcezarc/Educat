@@ -1,9 +1,12 @@
 from util.db.db_table import DbTable, SQL_INSERT_MODE
 
+DEFAULT_SEARCH_FIELD = 'nome'
+
 class FormatTable(DbTable):
     def config(self, table_name, schema, params):
         super().config(table_name, schema, params)
         self.last_condition = ''
+        self.flat_all = lambda d: {k: self.flatten(k, v) for k,v in d.items()}
 
     def insert(self, json_data):
         sample = json_data.copy()
@@ -22,7 +25,7 @@ class FormatTable(DbTable):
         else:
             mask = '{}'
         d = json_data
-        json_data = {k: self.flatten(k, d[k]) for k in d}
+        json_data = self.flat_all(json_data)
         if is_insert:
             field_list = [mask.format(k) for k in d]
             insert_values = self.statement_columns(
@@ -77,11 +80,21 @@ class FormatTable(DbTable):
         return key, value
 
     def contained_clause(self, field, value):
+        if field in self.required_fields:
+            return super().contained_clause(field, value)
         return "LIKE '%" + value + "%'"
 
     def get_conditions(self, values, only_pk=True):
         if not values:
             return ''
+        if isinstance(values, dict):
+            if DEFAULT_SEARCH_FIELD in values:
+                extract_field = lambda f, d: {k:v for k, v in d.items() if k == f}
+                values = extract_field(
+                    DEFAULT_SEARCH_FIELD, values
+                )
+            else:
+                values = self.flat_all(values)
         super().get_conditions(values, only_pk)
         self.last_condition = ' AND '.join(self.conditions)
         return self.last_condition

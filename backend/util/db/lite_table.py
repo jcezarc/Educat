@@ -41,16 +41,16 @@ class LiteTable(FormatTable):
             for field, value in zip(list(self.map), values):
                 if field in self.joins:
                     join = self.joins[field]
-                    value = join.find_one(value)
+                    value = join.find_one(value, join.pk_fields)
                 record[field] = value
             result.append(record)
         if filter_expr:
             self.cache[filter_expr] = result
         return result
 
-    def find_one(self, values):
+    def find_one(self, values, only_pk=False):
         found = self.find_all(
-            1, self.get_conditions(values)
+            1, self.get_conditions(values, only_pk=only_pk)
         )
         if found:
             return found[0]
@@ -64,20 +64,19 @@ class LiteTable(FormatTable):
         self.execute(command, True)
 
     def insert(self, json_data):
-        errors = super().insert(json_data)
-        if errors:
-            return errors
         for field, value in json_data.items():
             if field in self.joins:
                 join = self.joins[field]
-                found = join.find_one(value)
+                found = join.find_one(value, False)
                 if not found:
                     errors = join.insert(value)
                     if errors:
                         return errors
-                    found = join.find_one(value)
-                key = join.pk_fields[0]
-                json_data[field] = found[key]
+                    found = join.find_one(value, False)
+                json_data[field] = found
+        errors = super().insert(json_data)
+        if errors:
+            return errors
         command = self.get_command(
             json_data,
             is_insert=True,

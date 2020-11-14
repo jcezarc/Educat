@@ -8,7 +8,7 @@ from util.messages import (
     resp_ok
 )
 from service.db_connection import get_table
-from util.generator import aulas_fake, run_tests
+from util.generator import aulas_fake, run_generator_tests
 
 class AulaService:
     first_time = True
@@ -43,13 +43,13 @@ class AulaService:
         return resp_ok("Registro alterado OK!")
 
     def start_db(self):
-        run_tests()
-        curso, aulas = aulas_fake()
-        tc = self.table.joins['curso']
-        errors = tc.insert(curso)
-        if errors:
-            raise Exception(errors)
-        curso = tc.find_one(curso)['id']
-        for aula in aulas:
-            aula['curso'] = curso
-            self.table.insert(aula)
+        dados = aulas_fake()
+        # run_generator_tests(dados)
+        def importa_dados(curso, lista):
+            for aula in aulas:
+                aula['curso'] = curso
+                errors = self.table.insert(aula)
+                if errors:
+                    raise Exception(errors)
+        importa_dados(**dados)
+        print('#==---.... Banco de dados inicializado com sucesso! ....---==#')

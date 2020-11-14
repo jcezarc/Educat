@@ -6,7 +6,7 @@ PK_DEFAULT_VALUE = 0
 
 class ProfessorModel(Schema):
     id = Integer(primary_key=True, default=PK_DEFAULT_VALUE)
-    nome = Str(required=True)
+    nome = Str(required=True, default='')
     foto = Str()
 
 
