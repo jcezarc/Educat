@@ -27,5 +27,5 @@ def test_update_success():
 
 def test_update_failure():
     service = AulaService(FakeTable(AulaModel))
-    status_code = service.insert({})[1]
+    status_code = service.update({})[1]
     assert status_code == 400

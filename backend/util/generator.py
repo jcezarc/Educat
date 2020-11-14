@@ -33,7 +33,7 @@ class EducatProvider(BaseProvider):
         return c
 
 
-def fake_aula(count=10):
+def aulas_fake(count=10):
     fake = Faker('pt_BR')
     fake.add_provider(EducatProvider)
     curso = fake.curso()
@@ -50,7 +50,7 @@ def fake_aula(count=10):
     return curso, lista
 
 if __name__ == '__main__':
-    curso, lista = fake_aula()
+    curso, lista = aulas_fake()
     print('='*100)
     print('Curso:', curso)
     for item in lista:
