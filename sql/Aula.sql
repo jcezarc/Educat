@@ -1,5 +1,5 @@
 CREATE TABLE Aula(
-    id INT AUTO_INCREMENT,
+    id INT,
     dia DATE ,
     aluno INT,
     curso INT,

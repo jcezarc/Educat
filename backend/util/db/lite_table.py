@@ -1,7 +1,7 @@
 import sqlite3
 import mysql.connector
 from util.db.fmt_table import FormatTable
-
+from datetime import datetime
 
 class LiteTable(FormatTable):
 
@@ -42,6 +42,8 @@ class LiteTable(FormatTable):
                 if field in self.joins:
                     join = self.joins[field]
                     value = join.find_one(value, join.pk_fields)
+                if 'date' in str(type(value)):
+                    value = value.strftime('%Y-%m-%d')
                 record[field] = value
             result.append(record)
         if filter_expr:

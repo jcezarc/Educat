@@ -7,7 +7,7 @@ PK_DEFAULT_VALUE = 0
 
 class CursoModel(Schema):
     id = Integer(primary_key=True, default=PK_DEFAULT_VALUE)
-    nome = Str(required=True)
+    nome = Str(required=True, default='')
     sala = Str()
     horario = Str()
     foto = Str()

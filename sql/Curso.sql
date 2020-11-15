@@ -1,5 +1,5 @@
 CREATE TABLE Curso(
-    id INT AUTO_INCREMENT,
+    id INT,
     nome VARCHAR(100) ,
     sala VARCHAR(20) ,
     horario VARCHAR(100) ,

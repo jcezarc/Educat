@@ -46,7 +46,7 @@ class AulaService:
         dados = aulas_fake()
         # run_generator_tests(dados)
         def importa_dados(curso, lista):
-            for aula in aulas:
+            for aula in lista:
                 aula['curso'] = curso
                 errors = self.table.insert(aula)
                 if errors:

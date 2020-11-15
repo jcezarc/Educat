@@ -18,8 +18,11 @@ EDUCAT_HOST = os.environ.get(
 
 def get_table(schema):
     return LiteTable(schema, {
-            "host": EDUCAT_HOST,
-            "user": EDUCAT_USER,
-            "password": EDUCAT_PASSWORD,
-            "database": "educat"
+        # ---- MySql -------------------------
+            # "host": EDUCAT_HOST,
+            # "user": EDUCAT_USER,
+            # "password": EDUCAT_PASSWORD,
+            # "database": "educat"
+        # ---- Sqlite -----------------------
+                    "database": "educat.db"
         })

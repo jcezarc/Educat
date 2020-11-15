@@ -24,6 +24,7 @@ class EducatProvider(BaseProvider):
             target = os.path.join(FRONTEND_PATH,path)
             for f in os.listdir(target):
                 record = {}
+                record['id'] = len(data)+1
                 record['nome'] = f.replace('.png', '')
                 record['foto'] = path + '/' + f
                 data.append(record)
@@ -54,7 +55,7 @@ def aulas_fake(count=10):
         lista.append({
             'dia': today,
             'aluno': fake.aluno(),
-            'presente': False
+            'id': len(lista)+1
         })
     return {
         'curso': curso,
@@ -69,11 +70,8 @@ def run_generator_tests(dados=None):
             print('-'*100)
             print(item)
     if dados is None:
-        print('-------------> Não tem dados!!')
         FRONTEND_PATH = '../../frontend/src/'
         dados = aulas_fake()
-    else:
-        print('===>> Dados OK...!')
     exibe_dados(**dados)
 
 if __name__ == '__main__':

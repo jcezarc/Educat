@@ -8,7 +8,7 @@ PK_DEFAULT_VALUE = 0
 
 class AulaModel(Schema):
     id = Integer(primary_key=True, default=PK_DEFAULT_VALUE)
-    dia = Date()
+    dia = Date(required=True)
     aluno = Nested(AlunoModel)
     curso = Nested(CursoModel)
     presente = Boolean()
