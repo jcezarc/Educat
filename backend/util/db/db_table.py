@@ -119,20 +119,23 @@ class DbTable:
         if not values:
             return None
         if isinstance(values, dict):
+            result = []
             if only_pk:
-                result = []
-                for field in self.pk_fields:
-                    value = values.get(field, '')
+                field_list = self.pk_fields
+                for field in field_list:
+                    value = values.get(field)
                     result.append(value)
-                values = result
             else:
-                for field in values:
-                    value = values[field]
-                    if isinstance(value, list):
-                        value = value[0]
-                    self.add_condition(field, value)
-                return
-        if not isinstance(values, list):
+                field_list = []
+                for field, value in values.items():
+                    field_list.append(field)
+                    result.append(value)
+            values = result
+        elif not isinstance(values, list):
             values = [values]
-        for field, value in zip(self.pk_fields, values):
+        for field, value in zip(field_list, values):
+            if value is None:
+                continue
+            if isinstance(value, list):
+                value = value[0]
             self.add_condition(field, value)
