@@ -43,7 +43,6 @@ export class AulaListComponent implements OnInit {
       this.items = this.source
       return
     }
-    console.log(`Procurando ${param.searchContent}...`)
     this.items = this.source.filter(
       (obj: AulaModel) => 
         obj.aluno.nome.includes(param.searchContent)
