@@ -43,8 +43,6 @@ class LiteTable(FormatTable):
             for field, value in zip(field_list, values):
                 if field in self.joins:
                     join = self.joins[field]
-                    print("`-_-´'"*30)
-                    print('{} = {}'.format(field, value))
                     value = join.find_one(value, True)
                 if 'date' in str(type(value)):
                     value = value.strftime('%Y-%m-%d')
@@ -92,9 +90,15 @@ class LiteTable(FormatTable):
         return None
 
     def update(self, json_data):
+        if not json_data:
+            return 'No data to update'
         command = self.get_command(
             json_data,
             is_insert=False,
             use_quotes=False
         )
-        self.execute(command, True)
+        try:
+            self.execute(command, True)
+            return None
+        except:
+            return 'Invalid command'

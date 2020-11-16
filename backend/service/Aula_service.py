@@ -23,12 +23,14 @@ class AulaService:
             if self.find()[1] == 404:
                 self.start_db()
 
-    def find(self):
-        logging.info('Buscando aula de hoje...')
+    def find(self, dia=None):
+        if dia is None:
+            dia = datetime.today().strftime('%Y-%m-%d')
+        logging.info(f'Buscando aula do dia {dia}...')
         found = self.table.find_all(
             20,
             self.table.get_conditions({
-                'dia': datetime.today().strftime('%Y-%m-%d')
+                'dia': dia
             }, False)
         )
         if not found:
@@ -42,9 +44,8 @@ class AulaService:
             return resp_error(errors)
         return resp_ok("Registro alterado OK!")
 
-    def start_db(self):
-        dados = aulas_fake()
-        # run_generator_tests(dados)
+    def start_db(self, test_mode=False):
+        dados = aulas_fake(test_mode=test_mode)
         def importa_dados(curso, lista):
             for aula in lista:
                 aula['curso'] = curso

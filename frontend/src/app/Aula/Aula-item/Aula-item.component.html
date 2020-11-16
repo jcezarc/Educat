@@ -12,21 +12,7 @@
         </div>
         <ng-content></ng-content>
     </div>
-    <!-- <div class="row">
-
-        <div class="col-4 mx-1">
-
-            <span class="text-muted small">
-                {{Aula.curso.nome}}
-            </span>
-
-        </div>
-
-        <div class="col-6">
-            <span class="text-muted small">
-                {{Aula.curso.professor.nome}}
-            </span>
-        </div>
-
-    </div> -->
+    <div>
+        <input type="checkbox" [checked]="Aula.presente">
+    </div>
 </div>

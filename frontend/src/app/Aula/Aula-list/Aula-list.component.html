@@ -2,11 +2,6 @@
 
   <div *ngFor="let Aula of Navigator.view(items)" class="col-sm-6 col-xs-12">
     <app-Aula-item [Aula]="Aula">
-          <div>
-              <app-check-button (check)="save(Aula)">
-              </app-check-button>
-            
-          </div>
     </app-Aula-item>
   </div>
   <h4 *ngIf="!items" class="jumbotron ml-4">Nenhuma aula encontrada!. :(</h4>

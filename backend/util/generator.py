@@ -5,7 +5,6 @@ from datetime import datetime
 from collections import Counter
 from faker.providers import BaseProvider
 
-FRONTEND_PATH = '../frontend/src/'
 ASSETS_FMT = 'assets/img/{}'
 TODAS_SALAS = ['1A', '2B', '3C',]
 HORARIOS = [
@@ -15,13 +14,14 @@ HORARIOS = [
 ]
 
 class EducatProvider(BaseProvider):
+    FRONTEND_PATH = '../frontend/src/'
     source = {}
     index = Counter()
     def choose_or_create_record(self, type):
         data = self.source.setdefault(type, [])
         if not data:
             path = ASSETS_FMT.format(type)
-            target = os.path.join(FRONTEND_PATH,path)
+            target = os.path.join(self.FRONTEND_PATH,path)
             for f in os.listdir(target):
                 record = {}
                 record['id'] = len(data)+1
@@ -44,8 +44,10 @@ class EducatProvider(BaseProvider):
         return c
 
 
-def aulas_fake(count=10):
+def aulas_fake(test_mode=False, count=5):
     fake = Faker('pt_BR')
+    if test_mode:
+        EducatProvider.FRONTEND_PATH = '../../frontend/src/'
     fake.add_provider(EducatProvider)
     curso = fake.curso()
     curso['professor'] = fake.professor()
@@ -63,6 +65,8 @@ def aulas_fake(count=10):
     }
 
 def run_generator_tests(dados=None):
+    EducatProvider.index['curso'] = 2
+    EducatProvider.index['professor'] = 1
     def exibe_dados(curso, lista):
         print('='*100)
         print('Curso:', curso)
@@ -70,8 +74,7 @@ def run_generator_tests(dados=None):
             print('-'*100)
             print(item)
     if dados is None:
-        FRONTEND_PATH = '../../frontend/src/'
-        dados = aulas_fake()
+        dados = aulas_fake(True)
     exibe_dados(**dados)
 
 if __name__ == '__main__':

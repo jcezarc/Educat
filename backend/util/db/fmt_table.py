@@ -48,7 +48,7 @@ class FormatTable(DbTable):
             return 'UPDATE {} SET {} WHERE {}'.format(
                 table_name,
                 ','.join(field_list),
-                self.get_conditions(json_data, False)
+                self.get_conditions(json_data, True)
             )
 
     def flatten(self, key, value):
@@ -98,3 +98,29 @@ class FormatTable(DbTable):
         super().get_conditions(values, only_pk)
         self.last_condition = ' AND '.join(self.conditions)
         return self.last_condition
+
+    def create_table(self):
+        result = ''
+        field_list = []
+        for field_name, field_type in self.map.items():
+            field_list.append('\n\t{} {}'.format(
+                field_name, 
+                field_type
+            ))
+        for field, join in self.joins.items():
+            result += join.create_table()
+            field_list.append(
+                '\n\tFOREIGN KEY ({}) REFERENCES {}({})'.format(
+                    field, join.table_name, join.pk_fields[0]
+                )
+            )
+        field_list.append('\n\tPRIMARY KEY({})'.format(
+            ','.join(self.pk_fields)
+        ))
+        command = 'CREATE TABLE {}({}\n);\n'.format(
+            self.table_name, 
+            ','.join(field_list) 
+        )
+        self.execute(command, False)
+        result += command
+        return result
