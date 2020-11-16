@@ -10,14 +10,17 @@ class LiteTable(FormatTable):
         if 'user' in params:
             self.connection = mysql.connector.connect(**params)
         else:
-            self.connection = sqlite3.connect(params['database'])
+            self.connection = sqlite3.connect(
+                params['database'], 
+                check_same_thread=False
+            )
         self.cache = {}
 
     def execute(self, command, need_commit):
-        cursor = self.connection.cursor()
         print('-'*100)
         print(command)
         print('-'*100)
+        cursor = self.connection.cursor()
         cursor.execute(command)
         if need_commit:
             self.connection.commit()
@@ -97,8 +100,5 @@ class LiteTable(FormatTable):
             is_insert=False,
             use_quotes=False
         )
-        try:
-            self.execute(command, True)
-            return None
-        except:
-            return 'Invalid command'
+        self.execute(command, True)
+        return None

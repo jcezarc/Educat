@@ -19,10 +19,10 @@ export class AulaService{
         )
     }
 
-    saveAula(newItem: AulaModel): void{
+    saveAula(item: AulaModel): void{
         this.http.put(
             Aula_API,
-            JSON.stringify(newItem)
+            JSON.stringify(item)
         ).subscribe(
             resp => {
                 const obj:RespJsonFlask = (<RespJsonFlask>resp.json())

@@ -12,7 +12,6 @@ import { AulaListComponent } from './Aula/Aula-list/Aula-list.component';
 
 import { NavigatorComponent } from './shared/navigator/navigator.component';
 import { SearchBarComponent } from './shared/search-bar/search-bar.component';
-import {CheckButtonComponent} from './shared/check-button/check-button.component'
 import { HeaderComponent } from './header/header.component'
 
 @NgModule({
@@ -25,7 +24,6 @@ import { HeaderComponent } from './header/header.component'
     HeaderComponent,
     SearchBarComponent,
     NavigatorComponent,
-    CheckButtonComponent
   ],
   imports: [
     BrowserModule,

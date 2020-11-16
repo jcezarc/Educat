@@ -8,7 +8,7 @@
 
 * ### Banco de dados
     * Esta API pode rodar tanto com MySql como com Sqlite...
-    * Variáveis de ambiente
+    * Variáveis de ambiente (para usar com MySql)
         - EDUCAT_USER
         - EDUCAT_HOST
         - EDUCAT_PASSWORD
@@ -17,6 +17,14 @@
     * Curso
     * Professor
     * Aluno
+* ### Testes unitários
+    * Foram testados as seguintes situações:
+        - Consulta, bem sucedida, de Aula;
+        - Falha na consulta de Aula.
+        - Atualização da lista de presença;
+        - Falha na atualização da lista.
+
+![](./doc/testes_unitarios.png)
 
 ---
 ## Front-end

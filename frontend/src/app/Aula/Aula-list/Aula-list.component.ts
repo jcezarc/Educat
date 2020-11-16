@@ -50,6 +50,8 @@ export class AulaListComponent implements OnInit {
   }
 
   save(item: AulaModel){
+    item.presente = !item.presente
+    console.log('Salvando...', item)
     this.AulaSvc.saveAula(item)
   }
 

@@ -39,8 +39,16 @@ class AulaService:
 
     def update(self, json):
         logging.info('Alterando lista de presença da Aula ...')
-        errors = self.table.update(json)
+        if 'id' in json and 'presente' in json:
+            errors = self.table.update({
+                'id': json['id'],
+                'presente': int(json['presente']),
+            })
+        else:
+            errors = True
         if errors:
+            print('='*400)
+            print(errors)
             return resp_error(errors)
         return resp_ok("Registro alterado OK!")
 
