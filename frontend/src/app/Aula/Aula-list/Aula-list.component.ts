@@ -19,6 +19,13 @@ export class AulaListComponent implements OnInit {
     private router: Router
   ) { }
 
+  nomeCurso():string{
+    if(this.items.length > 0){
+      return this.items[0].curso.nome
+    }
+    return ''
+  }
+
   ngOnInit() {
     this.router.onSameUrlNavigation = "reload"
     this.AulaSvc.allAulas().subscribe(
@@ -26,6 +33,7 @@ export class AulaListComponent implements OnInit {
         let obj:RespJsonFlask = (<RespJsonFlask>resp.json())
         this.source = (<AulaModel[]>obj.data)
         this.items = this.source
+        console.log(this.items)
       }
     )
   }
@@ -35,9 +43,10 @@ export class AulaListComponent implements OnInit {
       this.items = this.source
       return
     }
+    console.log(`Procurando ${param.searchContent}...`)
     this.items = this.source.filter(
       (obj: AulaModel) => 
-        obj.aluno.nome.contains(param.searchContent)
+        obj.aluno.nome.includes(param.searchContent)
     )
   }
 

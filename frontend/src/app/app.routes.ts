@@ -3,5 +3,5 @@ import { AulaComponent } from "./Aula/Aula-component";
 
 
 export const ROUTES:Routes = [
-    {path:'Aula',component:AulaComponent},
+    {path:'',component:AulaComponent},
 ]

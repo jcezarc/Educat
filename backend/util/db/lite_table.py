@@ -10,7 +10,7 @@ class LiteTable(FormatTable):
         if 'user' in params:
             self.connection = mysql.connector.connect(**params)
         else:
-            self.connection = sqlite3.connect(**params)
+            self.connection = sqlite3.connect(params['database'])
         self.cache = {}
 
     def execute(self, command, need_commit):
@@ -25,7 +25,9 @@ class LiteTable(FormatTable):
         return cursor
 
     def find_all(self, limit=0, filter_expr=''):
-        command = 'SELECT * FROM {}{}{}'.format(
+        field_list = list(self.map)
+        command = 'SELECT {} FROM {}{}{}'.format(
+            ','.join(field_list),
             self.table_name,
 	        f' WHERE {filter_expr}' if filter_expr else '',
 	        f' LIMIT {limit}' if limit else ''
@@ -38,10 +40,12 @@ class LiteTable(FormatTable):
         result = []
         for values in dataset:
             record = {}
-            for field, value in zip(list(self.map), values):
+            for field, value in zip(field_list, values):
                 if field in self.joins:
                     join = self.joins[field]
-                    value = join.find_one(value, join.pk_fields)
+                    print("`-_-´'"*30)
+                    print('{} = {}'.format(field, value))
+                    value = join.find_one(value, True)
                 if 'date' in str(type(value)):
                     value = value.strftime('%Y-%m-%d')
                 record[field] = value

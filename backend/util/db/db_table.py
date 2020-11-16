@@ -118,10 +118,10 @@ class DbTable:
         self.conditions = []
         if not values:
             return None
+        field_list = self.pk_fields
         if isinstance(values, dict):
             result = []
             if only_pk:
-                field_list = self.pk_fields
                 for field in field_list:
                     value = values.get(field)
                     result.append(value)
