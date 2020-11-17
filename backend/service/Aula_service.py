@@ -53,7 +53,8 @@ class AulaService:
         return resp_ok("Registro alterado OK!")
 
     def start_db(self, test_mode=False):
-        dados = aulas_fake(test_mode=test_mode)
+        max_aula = self.table.get_max()
+        dados = aulas_fake(max_aula, test_mode=test_mode)
         def importa_dados(curso, lista):
             for aula in lista:
                 aula['curso'] = curso

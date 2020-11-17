@@ -27,6 +27,14 @@ class LiteTable(FormatTable):
             self.cache = {}
         return cursor
 
+    def get_max(self):
+        command = 'SELECT max({}) FROM {}'.format(
+            self.pk_fields[0],
+            self.table_name
+        )
+        result = self.execute(command, False).fetchall()
+        return result[0][0]
+
     def find_all(self, limit=0, filter_expr=''):
         field_list = list(self.map)
         command = 'SELECT {} FROM {}{}{}'.format(

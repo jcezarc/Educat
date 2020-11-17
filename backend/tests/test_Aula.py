@@ -4,7 +4,6 @@ from service.Aula_service import AulaService
 from model.Aula_model import AulaModel, PK_DEFAULT_VALUE
 from util.db.lite_table import LiteTable
 from util.messages import resp_ok, resp_not_found
-from util.generator import aulas_fake
 
 def get_service():
     table = LiteTable(

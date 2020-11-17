@@ -10,7 +10,8 @@ Este projeto representa um sistema para controle de presença de alunos em aulas
 ## Back-end
 
 * ### Banco de dados
-    * Esta API pode rodar tanto com MySql como com Sqlite...
+    * Esta API pode rodar tanto com MySql como com Sqlite:
+        - para usar com MySql abra o arquivo `/backend/service/db_connection.py` e (des)comente as linhas referentes à conexão desejada.
     * Variáveis de ambiente (para usar com MySql)
         - EDUCAT_USER
         - EDUCAT_HOST
@@ -18,7 +19,7 @@ Este projeto representa um sistema para controle de presença de alunos em aulas
     * Tabelas
 ![](./doc/banco_de_dados.png)
 * ### Como rodar:
-    * Configure as variáveis de ambiente no seu sistema operacional. 
+    * Configure as variáveis de ambiente no seu sistema operacional -- Exemplo:
         - `SET EDUCAT_USER=root`
         - `SET EDUCAT_HOST=localhost`
         - `SET EDUCAT_PASSWORD=xyz1234`

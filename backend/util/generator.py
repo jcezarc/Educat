@@ -1,5 +1,4 @@
 import os
-import random
 from faker import Faker
 from datetime import datetime
 from collections import Counter
@@ -31,7 +30,6 @@ class EducatProvider(BaseProvider):
         pos = self.index[type] % len(data)
         self.index[type] = pos + 1
         return data[pos], pos
-        # return random.choice(data)
     def aluno(self):
         return self.choose_or_create_record('aluno')[0]
     def professor(self):
@@ -44,7 +42,7 @@ class EducatProvider(BaseProvider):
         return c
 
 
-def aulas_fake(test_mode=False, count=5):
+def aulas_fake(last_id, test_mode=False, count=5):
     fake = Faker('pt_BR')
     if test_mode:
         EducatProvider.FRONTEND_PATH = '../../frontend/src/'
@@ -54,10 +52,11 @@ def aulas_fake(test_mode=False, count=5):
     lista = []
     today = datetime.today().strftime('%Y-%m-%d')
     while len(lista) < count:
+        last_id += 1
         lista.append({
             'dia': today,
             'aluno': fake.aluno(),
-            'id': len(lista)+1
+            'id': last_id
         })
     return {
         'curso': curso,
