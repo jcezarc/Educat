@@ -1,11 +1,8 @@
 from util.db.db_table import DbTable, SQL_INSERT_MODE
 
-DEFAULT_SEARCH_FIELD = 'nome'
-
 class FormatTable(DbTable):
     def config(self, table_name, schema, params):
         super().config(table_name, schema, params)
-        self.last_condition = ''
         self.flat_all = lambda d: {k: self.flatten(k, v) for k,v in d.items()}
 
     def insert(self, json_data):
@@ -88,16 +85,11 @@ class FormatTable(DbTable):
         if not values:
             return ''
         if isinstance(values, dict):
-            if DEFAULT_SEARCH_FIELD in values:
-                extract_field = lambda f, d: {k:v for k, v in d.items() if k == f}
-                values = extract_field(
-                    DEFAULT_SEARCH_FIELD, values
-                )
-            else:
-                values = self.flat_all(values)
+            values = self.flat_all(values)
         super().get_conditions(values, only_pk)
-        self.last_condition = ' AND '.join(self.conditions)
-        return self.last_condition
+        return ' AND '.join(
+            self.conditions
+        )
 
     def create_table(self):
         result = ''
@@ -124,3 +116,32 @@ class FormatTable(DbTable):
         self.execute(command, False)
         result += command
         return result
+
+    def query_elements(self, prefix='', source=''):
+        a = self.alias
+        if prefix:
+            fields = [f'{a}.{f} as {prefix}{f}' for f in self.map]
+        else:
+            fields = [f'{a}.{f}' for f in self.map]
+        curr_table = '{} {}'.format(self.table_name, self.alias)
+        expr_join = ''
+        for field in self.joins:
+            join = self.joins[field]
+            join_fields, join_table, join_left = join.query_elements(
+                prefix+join.alias+'__', expr_join
+            )
+            join_primary_key = join.alias + '.' + join.pk_fields[0]
+            if join_primary_key in join_fields:
+                join_fields.remove(join_primary_key)
+            header = 'LEFT JOIN {} '.format(join_table)
+            if header in source or header in expr_join:
+                continue
+            sub_expr = '\n\t{}ON ({}.{} = {}){}'.format(
+                header,
+                self.alias, field,
+                join_primary_key,
+                join_left
+            )
+            fields += join_fields
+            expr_join += sub_expr
+        return fields, curr_table, expr_join

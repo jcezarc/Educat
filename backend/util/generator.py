@@ -73,7 +73,7 @@ def run_generator_tests(dados=None):
             print('-'*100)
             print(item)
     if dados is None:
-        dados = aulas_fake(True)
+        dados = aulas_fake(0, True)
     exibe_dados(**dados)
 
 if __name__ == '__main__':
