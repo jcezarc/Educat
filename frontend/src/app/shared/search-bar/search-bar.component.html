@@ -1,10 +1,16 @@
 <div class="navbar mt-2">
-    <div class="nav-item">
+    <div class="nav-item container">
         <form [formGroup]="searchForm" class="form-inline">
-            <input type="text" formControlName="searchContent" class="form-control">
-            <button (click)="emitFilterEvent(searchForm.value)" class="btn btn-light" type="button">
-                <i class="fa fa-search"></i>
-            </button>
+
+            <div class="col-6 mr-2 search-input">
+                <input type="text" formControlName="searchContent" class="form-control">
+            </div>
+            <div class="col-4">
+                <button (click)="emitFilterEvent(searchForm.value)" class="btn btn-light btn-search" type="button">
+                    <i class="fa fa-search"></i>
+                </button>    
+            </div>
+            
         </form>
     </div> 
 </div>

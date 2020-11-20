@@ -1,7 +1,7 @@
 import os
+import random
 from faker import Faker
 from datetime import datetime
-from collections import Counter
 from faker.providers import BaseProvider
 
 ASSETS_FMT = 'assets/img/{}'
@@ -15,7 +15,7 @@ HORARIOS = [
 class EducatProvider(BaseProvider):
     FRONTEND_PATH = '../frontend/src/'
     source = {}
-    index = Counter()
+    index = 0
     def choose_or_create_record(self, type):
         data = self.source.setdefault(type, [])
         if not data:
@@ -26,20 +26,21 @@ class EducatProvider(BaseProvider):
                 record['id'] = len(data)+1
                 record['nome'] = f.replace('.png', '')
                 record['foto'] = path + '/' + f
+                if type == 'curso':
+                    record['sala'] = random.choice(TODAS_SALAS)
+                    record['horario'] = random.choice(HORARIOS)                
                 data.append(record)
-        pos = self.index[type] % len(data)
-        self.index[type] = pos + 1
-        return data[pos], pos
+        if type == 'aluno':
+            pos = self.index % len(data)
+            self.index = pos + 1
+            return data[pos]
+        return random.choice(data)
     def aluno(self):
-        return self.choose_or_create_record('aluno')[0]
+        return self.choose_or_create_record('aluno')
     def professor(self):
-        return self.choose_or_create_record('professor')[0]
+        return self.choose_or_create_record('professor')
     def curso(self):
-        c, index = self.choose_or_create_record('curso')
-        index %= 3
-        c['sala'] = TODAS_SALAS[index]
-        c['horario'] = HORARIOS[index]
-        return c
+        return self.choose_or_create_record('curso')
 
 
 def aulas_fake(last_id, test_mode=False, count=5):
@@ -50,11 +51,11 @@ def aulas_fake(last_id, test_mode=False, count=5):
     curso = fake.curso()
     curso['professor'] = fake.professor()
     lista = []
-    today = datetime.today().strftime('%Y-%m-%d')
+    today = datetime.today()
     while len(lista) < count:
         last_id += 1
         lista.append({
-            'dia': today,
+            'dia': today.strftime('%Y-%m-%d'),
             'aluno': fake.aluno(),
             'id': last_id
         })

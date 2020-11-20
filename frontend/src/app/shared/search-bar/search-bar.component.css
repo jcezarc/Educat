@@ -1,0 +1,9 @@
+.search-input{
+    min-width: 150px;
+    width: 100%;
+}
+
+.btn-search{
+    float: left;
+    border: 1px solid #ccc;
+}

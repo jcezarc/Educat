@@ -14,7 +14,6 @@ class LiteTable(FormatTable):
                 params['database'], 
                 check_same_thread=False
             )
-        self.allow_left_joins = True
         self.cache = {}
 
     def execute(self, command, need_commit):
@@ -33,11 +32,11 @@ class LiteTable(FormatTable):
             self.pk_fields[0],
             self.table_name
         )
-        result = self.execute(command, False).fetchall()
-        return result[0][0]
+        result = self.execute(command, False).fetchall()[0][0]
+        return result if result else 0
 
-    def find_all(self, limit=0, filter_expr=''):
-        if self.allow_left_joins:
+    def find_all(self, limit=0, filter_expr='', allow_left_joins=True):
+        if allow_left_joins:
             field_list, curr_table, expr_join = self.query_elements()
         else:
             field_list = list(self.map)
@@ -73,17 +72,23 @@ class LiteTable(FormatTable):
             self.cache[filter_expr] = result
         return result
 
-    def get_conditions(self, values, only_pk=True):
+    def get_conditions(self, values, only_pk=True, use_alias=False):
         result = super().get_conditions(values, only_pk)
-        if not self.allow_left_joins or only_pk:
+        if not use_alias:
             return result
         return ' AND '.join(
             [f'{self.alias}.{c}' for c in self.conditions]
         )
 
-    def find_one(self, values):
+    def find_one(self, values, only_pk=False, use_alias=True):
         found = self.find_all(
-            1, self.get_conditions(values, False)
+            limit=1,
+            filter_expr=self.get_conditions(
+                values,
+                only_pk,
+                use_alias,
+            ),
+            allow_left_joins=False
         )
         if found:
             return found[0]
@@ -101,12 +106,12 @@ class LiteTable(FormatTable):
             field = field.split('.')[-1]
             if field in self.joins:
                 join = self.joins[field]
-                found = join.find_one(value)
+                found = join.find_one(value, True, False)
                 if not found:
                     errors = join.insert(value)
                     if errors:
                         return errors
-                    found = join.find_one(value)
+                    found = join.find_one(value, True, False)
                 json_data[field] = found
         errors = super().insert(json_data)
         if errors:
