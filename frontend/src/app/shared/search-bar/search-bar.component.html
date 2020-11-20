@@ -2,10 +2,10 @@
     <div class="nav-item container">
         <form [formGroup]="searchForm" class="form-inline">
 
-            <div class="col-6 mr-2 search-input">
+            <div class="col-10 search-input">
                 <input type="text" formControlName="searchContent" class="form-control">
             </div>
-            <div class="col-4">
+            <div class="col-2">
                 <button (click)="emitFilterEvent(searchForm.value)" class="btn btn-light btn-search" type="button">
                     <i class="fa fa-search"></i>
                 </button>    

@@ -61,6 +61,8 @@ class LiteTable(FormatTable):
             for field, value in zip(field_list, row):
                 field = right_side(' as ')
                 field = right_side('.')
+                if 'date' in str(type(value)):
+                    value = value.strftime('%Y-%m-%d')
                 key, value = self.inflate(
                     value,
                     record,
